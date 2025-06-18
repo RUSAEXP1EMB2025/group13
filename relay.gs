@@ -1,7 +1,7 @@
 function onEdit(e) {
   const ss=e.source;
-  const sheet1 = ss.getSheetByName('シート１');
-  const sheet2 = ss.getSheetByName('シート2');
+  const sheet1 = ss.getSheetByName('recept');
+  const sheet2 = ss.getSheetByName('post');
 
   if(e.range.getSheet().getName()===sheet1.getName()&&e.range.getColumn()===3){
     const edRow=e.range.getRow();
