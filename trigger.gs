@@ -11,7 +11,7 @@ function setTriggerFromSheet() {
         deleteExistingTrigger();
 
         // 指定した日時にcontrolTVSequenceを実行するトリガーを設定
-        ScriptApp.newTrigger("controlTVSequence")
+        ScriptApp.newTrigger("recordTVProgram")
             .timeBased()
             .at(triggerTime)
             .create();
