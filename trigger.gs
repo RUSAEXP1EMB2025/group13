@@ -17,7 +17,7 @@ function runRemoAtScheduledTime() {
 
   var channel = sheet.getRange(row, 2).getValue();  // チャンネル（B列）
   setChannelSignal(channel);  // チャンネルをセット
-  controlTVSequence();        // Remoで操作
+  recordTVProgram(channelId)      // Remoで操作
 
   sheet.getRange(row, 3).setValue(true);  // 実行済み（C列）にtrue
   props.deleteProperty("targetRow");      // 情報削除（単発実行前提）
