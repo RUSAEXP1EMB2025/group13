@@ -1,7 +1,7 @@
 const REMO_ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN';
 const BASE_URL = "https://api.nature.global/1/signals/";
 
-// 🔁 チャンネル番号と対応する signalId のマップ
+//チャンネル番号と対応する signalId のマップ
 const CHANNEL_SIGNAL_MAP = {
   1: "sigID_CH1",
   2: "sigID_CH2",
@@ -17,7 +17,7 @@ const CHANNEL_SIGNAL_MAP = {
   12: "sigID_CH12"
 };
 
-// 🚀 signalId を送信する基本関数
+//signalId を送信する基本関数
 function sendRemoSignal(signalId) {
   const url = BASE_URL + signalId + "/send";
   const options = {
@@ -29,12 +29,12 @@ function sendRemoSignal(signalId) {
   UrlFetchApp.fetch(url, options);
 }
 
-// 📺 電源ON
+//電源ON
 function turnOnTV() {
   sendRemoSignal("XXXXXX");  // テレビの電源ON（事前登録したID）
 }
 
-// 📡 チャンネル変更（数字 → signalId を変換）
+//チャンネル変更（数字 → signalId を変換）
 function changeChannel(channelNum) {
   const signalId = CHANNEL_SIGNAL_MAP[channelNum];
   if (!signalId) {
@@ -43,7 +43,7 @@ function changeChannel(channelNum) {
   sendRemoSignal(signalId);
 }
 
-// 📋 番組表などの操作
+//番組表などの操作
 function openTVGuide() {
   sendRemoSignal("YYYYYY");
 }
@@ -57,7 +57,7 @@ function turnOffTV() {
   sendRemoSignal("TTTTTT");
 }
 
-// 🧠 トリガーから呼ばれる録画関数（数字チャンネル対応済み）
+//トリガーから呼ばれる録画関数（数字チャンネル対応済み）
 function recordTVProgram(channelId) {
   turnOnTV();
   Utilities.sleep(5000);
