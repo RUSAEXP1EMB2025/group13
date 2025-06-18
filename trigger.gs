@@ -1,33 +1,24 @@
-function setTriggerFromSheet() {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Schedule");
-    var cell = sheet.getRange("A1");  // A1セルから日時を取得
-    var scheduledTime = cell.getValue();  // 取得した日時
-    var triggerTime = new Date(scheduledTime); // GAS用のDateオブジェクトに変換
+// 時刻トリガーを作成（指定行に対する）
+function createTimeTrigger(date, row) {
+  ScriptApp.newTrigger("runRemoAtScheduledTime")
+           .timeBased()
+           .at(date)
+           .create();
 
-    if (triggerTime > new Date()) {
-        Logger.log("設定するトリガー時刻: " + triggerTime);
-        
-        // 既存のトリガーを削除（重複防止）
-        deleteExistingTrigger();
-
-        // 指定した日時にcontrolTVSequenceを実行するトリガーを設定
-        ScriptApp.newTrigger("recordTVProgram")
-            .timeBased()
-            .at(triggerTime)
-            .create();
-
-        Logger.log("トリガーを設定しました！");
-    } else {
-        Logger.log("指定した日時が過去のため、トリガーを設定できません。");
-    }
+  // 行番号を Properties に記録（予約ごとに保存する必要がある場合、工夫要）
+  PropertiesService.getScriptProperties().setProperty("targetRow", row.toString());
 }
 
-// 既存のトリガーを削除する関数（重複を防ぐ）
-function deleteExistingTrigger() {
-    var allTriggers = ScriptApp.getProjectTriggers();
-    for (var i = 0; i < allTriggers.length; i++) {
-        if (allTriggers[i].getHandlerFunction() === "controlTVSequence") {
-            ScriptApp.deleteTrigger(allTriggers[i]);
-        }
-    }
+// トリガーで実行される本体
+function runRemoAtScheduledTime() {
+  var props = PropertiesService.getScriptProperties();
+  var row = parseInt(props.getProperty("targetRow"), 10);
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("予約一覧");
+
+  var channel = sheet.getRange(row, 2).getValue();  // チャンネル（B列）
+  setChannelSignal(channel);  // チャンネルをセット
+  controlTVSequence();        // Remoで操作
+
+  sheet.getRange(row, 3).setValue(true);  // 実行済み（C列）にtrue
+  props.deleteProperty("targetRow");      // 情報削除（単発実行前提）
 }
