@@ -1,4 +1,4 @@
-const SPREADSHEET_ID = '1cSyQMLLVXcAzgjxqxWk1yZxlXQq150Qv2SvHKx5-NCI'; // ← あなたのスプレッドシートIDに変更
+const SPREADSHEET_ID = '1QNwMOOJdy_wAieiYTr-pxlXUEK3emcSUGS8f_rC8Oys'; // ← あなたのスプレッドシートIDに変更
 
 function getSheet(name) {
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -10,7 +10,7 @@ function getSheet(name) {
 // スプレッドシート編集時のトリガー関数（A列：予約時刻）
 function onEdit(e) {
   const range = e.range;
-  const sheetName = "予約一覧";
+  const sheetName = "post";
 
   if (range.getSheet().getName() === sheetName &&
       range.getColumn() === 1 &&
