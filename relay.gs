@@ -1,17 +1,10 @@
-function onEdit(e) {
-  const ss=e.source;
+function relay() {
+  const SPREADSHEET_ID = '1QNwMOOJdy_wAieiYTr-pxlXUEK3emcSUGS8f_rC8Oys';
+  const ss=SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet1 = ss.getSheetByName('recept');
   const sheet2 = ss.getSheetByName('post');
 
-  if(e.range.getSheet().getName()===sheet1.getName()&&e.range.getColumn()===3){
-    const edRow=e.range.getRow();
-    const edValue=e.range.getValue();
-
-    if(edValue==='録画予約'&&edRow===2){
-      Logger.log('録画予約確認。待機状態');
-    }
-
-    if(typeof edValue==='number'&&edRow===4&&typeof sheet1.getRange('C3').getValue()==='number'&&sheet1.getRange('C2').getValue()==='録画予約'){
+  if(typeof sheet1.getRange('C4')==='number'&&typeof sheet1.getRange('C3').getValue()==='number'&&sheet1.getRange('C2').getValue()==='録画予約'){
       const valueC3 = sheet1.getRange('C3').getValue();
       const valueC4 = sheet1.getRange('C4').getValue();
 
@@ -23,10 +16,8 @@ function onEdit(e) {
       sheet2.getRange(targetRowSheet2,1).setValue(valueC3);
       sheet2.getRange(targetRowSheet2,2).setValue(valueC4);
 
-      Logger.log('転記完了シート１内容削除');
-
-      sheet1.clearContents();
-      sheet1.getRange('C2').setValue('');
-    }
+      const rangeToClear = sheet1.getRange("A2:C4");
+      const blankValues = Array(rangeToClear.getNumRows()).fill('').map(() => Array(rangeToClear.getNumColumns()).fill(''));
+      rangeToClear.setValues(blankValues);
   }
 }
