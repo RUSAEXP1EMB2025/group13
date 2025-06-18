@@ -13,7 +13,7 @@ function createTimeTrigger(date, row) {
 function runRemoAtScheduledTime() {
   var props = PropertiesService.getScriptProperties();
   var row = parseInt(props.getProperty("targetRow"), 10);
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("予約一覧");
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("post");
 
   var channel = sheet.getRange(row, 2).getValue();  // チャンネル（B列）
   setChannelSignal(channel);  // チャンネルをセット
