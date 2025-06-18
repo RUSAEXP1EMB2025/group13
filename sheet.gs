@@ -1,5 +1,5 @@
 function getSheet(name) {
-  const SPREADSHEET_ID = '1cSyQMLLVXcAzgjxqxWk1yZxlXQq150Qv2SvHKx5-NCI'
+  const SPREADSHEET_ID = ''//予約を実行する日時とチャンネルが保存されたスプレッドシートのID
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet = spreadsheet.getSheetByName(name);
 
