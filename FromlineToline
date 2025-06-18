@@ -84,13 +84,13 @@ function reply(replyToken, str)
 
   messages.push({ type: "text", text: str});
 
-  //APIリクエスト時にセットするペイロード値を設定する
+  /*APIリクエスト時にセットするペイロード値を設定する*/
   const payload = {
     'replyToken': replyToken,
     'messages': messages
   };
 
-  //HTTPSのPOST時のオプションパラメータを設定する
+  /*HTTPSのPOST時のオプションパラメータを設定する*/
   const options = {
     'payload': JSON.stringify(payload),
     'myamethod': 'POST',
@@ -98,7 +98,7 @@ function reply(replyToken, str)
     'contentType': 'application/json'
   };
 
-  //LINE Messaging APIにリクエストし、ユーザーからの投稿に返答する
+  /*LINE Messaging APIにリクエストし、ユーザーからの投稿に返答*/
   UrlFetchApp.fetch(url, options);
 }
 
