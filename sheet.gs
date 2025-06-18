@@ -12,10 +12,12 @@ function getSheet(name) {
 
 // 編集されたときのフック（A列：予約時刻）
 function onEdit(e) {
-  var sheet = e.source.getSheetByName("予約一覧");
   var range = e.range;
+  var sheetName = "予約一覧";
 
-  if (range.getColumn() === 1 && range.getRow() > 1) {
+  if (range.getSheet().getName() === sheetName &&
+      range.getColumn() === 1 && range.getRow() > 1) {
+        
     var date = new Date(range.getValue());
 
     if (date.getTime() > new Date().getTime()) {
@@ -23,4 +25,5 @@ function onEdit(e) {
     }
   }
 }
+
 
