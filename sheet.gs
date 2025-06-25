@@ -13,7 +13,7 @@ function onEdit(e) {
   const sheetName = "post";
 
   if (range.getSheet().getName() === sheetName &&
-      range.getColumn() === 1 &&
+      range.getColumn() === 2 &&
       range.getRow() > 1) {
 
     const date = new Date(range.getValue());
