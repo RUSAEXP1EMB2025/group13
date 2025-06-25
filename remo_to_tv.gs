@@ -80,17 +80,21 @@ function turnOffTV() {
 //トリガーから呼ばれる録画関数（数字チャンネル対応済み）
 function recordTVProgram(channelId) {
   turnOnTV();
-  Utilities.sleep(5000);
+  Utilities.sleep(6000);
   changeChannel(channelId);
-  Utilities.sleep(3000);
+  Utilities.sleep(4000);
   openTVGuide();
-  Utilities.sleep(2000);
+  Utilities.sleep(3000);
   moveCursorDown();
-  Utilities.sleep(2000);
+  Utilities.sleep(3000);
   confirmSelection();
-  Utilities.sleep(2000);
+  Utilities.sleep(3000);
   confirmSelection();
-  Utilities.sleep(5000);
+  Utilities.sleep(6000);
   turnOffTV();
 }
 
+function test() {
+  const ch = 2;
+  recordTVProgram(ch);
+}
