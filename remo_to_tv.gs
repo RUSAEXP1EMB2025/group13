@@ -1,60 +1,80 @@
-const REMO_ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN';
-const BASE_URL = "https://api.nature.global/1/signals/";
+const REMO_ACCESS_TOKEN = 'ory_at_kMVz136j5wrMt9RXOuFilYRxVL7z_0xnRpvD2lu7D48.RWrh8k6za0x2wK_kKXLrrsEYQTQmsRMqe-eqzyuc7zU';
+const BASE_URL = "https://api.nature.global/1/";
 
 //チャンネル番号と対応する signalId のマップ
 const CHANNEL_SIGNAL_MAP = {
-  1: "sigID_CH1",
-  2: "sigID_CH2",
-  3: "sigID_CH3",
-  4: "sigID_CH4",
-  5: "sigID_CH5",
-  6: "sigID_CH6",
-  7: "sigID_CH7",
-  8: "sigID_CH8",
-  9: "sigID_CH9",
-  10: "sigID_CH10",
-  11: "sigID_CH11",
-  12: "sigID_CH12"
+  1: "ch-1",
+  2: "ch-2",
+  3: "ch-3",
+  4: "ch-4",
+  5: "ch-5",
+  6: "ch-6",
+  7: "ch-7",
+  8: "ch-8",
+  9: "ch-9",
+  10: "ch-10",
+  11: "ch-11",
+  12: "ch-12"
 };
 
+function getRemo(){
+  const url = BASE_URL + 'appliances' ;
+    const options = {
+      'method':'GET',
+      'headers':{
+        "Authorization": "Bearer " + REMO_ACCESS_TOKEN
+      }
+    };
+  const test = JSON.parse(UrlFetchApp.fetch(url, options));
+  console.log(test[0])
+}
+
+
 //signalId を送信する基本関数
-function sendRemoSignal(signalId) {
-  const url = BASE_URL + signalId + "/send";
+function sendRemoSignal(button) {
+  const url = BASE_URL + 'appliances/' + '9cc06383-5294-4ef7-9f4e-e4f7c18b603f' + '/tv' ;
+  const body = {
+    'button': button
+  }
+  
   const options = {
-    method: "POST",
-    headers: {
+    'method':'POST',
+    'headers':{
       "Authorization": "Bearer " + REMO_ACCESS_TOKEN
-    }
+    },
+    'payload': body
   };
+
   UrlFetchApp.fetch(url, options);
 }
 
 //電源ON
 function turnOnTV() {
-  sendRemoSignal("XXXXXX");  // テレビの電源ON（事前登録したID）
+  sendRemoSignal('power');  // テレビの電源ON（事前登録したID）
 }
 
 //チャンネル変更（数字 → signalId を変換）
-function changeChannel(channelNum) {
-  const signalId = CHANNEL_SIGNAL_MAP[channelNum];
-  if (!signalId) {
+function changeChannel(signalId) {
+  const button = CHANNEL_SIGNAL_MAP[signalId];
+  console.log(button)
+  if (!button) {
     throw new Error(`チャンネル ${channelNum} に対応する signalId が見つかりません`);
   }
-  sendRemoSignal(signalId);
+  sendRemoSignal(button);
 }
 
 //番組表などの操作
 function openTVGuide() {
-  sendRemoSignal("YYYYYY");
+  sendRemoSignal('tv-schedule');
 }
 function moveCursorDown() {
-  sendRemoSignal("ZZZZZZ");
+  sendRemoSignal('down');
 }
 function confirmSelection() {
-  sendRemoSignal("WWWWWW");
+  sendRemoSignal('ok');
 }
 function turnOffTV() {
-  sendRemoSignal("TTTTTT");
+  sendRemoSignal('power');
 }
 
 //トリガーから呼ばれる録画関数（数字チャンネル対応済み）
