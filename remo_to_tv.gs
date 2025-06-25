@@ -1,4 +1,4 @@
-const REMO_ACCESS_TOKEN = 'ory_at_kMVz136j5wrMt9RXOuFilYRxVL7z_0xnRpvD2lu7D48.RWrh8k6za0x2wK_kKXLrrsEYQTQmsRMqe-eqzyuc7zU';
+const REMO_ACCESS_TOKEN = 'ory_at_oXU4cPyZXQjAoRP_2C8adYr2c3skbaV17NU8xSRh8ho.0hRRaKdAkTT5WwZBRcieQ9zSKMvy6CMrbq5zXv869TU';
 const BASE_URL = "https://api.nature.global/1/";
 
 //チャンネル番号と対応する signalId のマップ
@@ -32,7 +32,7 @@ function getRemo(){
 
 //signalId を送信する基本関数
 function sendRemoSignal(button) {
-  const url = BASE_URL + 'appliances/' + '9cc06383-5294-4ef7-9f4e-e4f7c18b603f' + '/tv' ;
+  const url = BASE_URL + 'appliances/' + 'cb0a4aa1-86dd-473c-93fc-79834b6116c4' + '/tv' ;
   const body = {
     'button': button
   }
