@@ -1,4 +1,4 @@
-const SPREADSHEET_ID = '1QNwMOOJdy_wAieiYTr-pxlXUEK3emcSUGS8f_rC8Oys'; // ← あなたのスプレッドシートIDに変更
+const SPREADSHEET_ID = '1QNwMOOJdy_wAieiYTr-pxlXUEK3emcSUGS8f_rC8Oys';
 
 function getSheet(name) {
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -7,18 +7,21 @@ function getSheet(name) {
   return sheet;
 }
 
-// スプレッドシート編集時のトリガー関数（A列：予約時刻）
-function onEdit(e) {
-  const range = e.range;
-  const sheetName = "post";
+// 毎分または定期的に呼ばれて予約をチェックする関数
+function checkAndTrigger() {
+  const sheet = getSheet("post");
+  const now = new Date();
+  const lastRow = sheet.getLastRow();
 
-  if (range.getSheet().getName() === sheetName &&
-      range.getColumn() === 2 &&
-      range.getRow() > 1) {
+  for (let row = 2; row <= lastRow; row++) {
+    const channel = sheet.getRange(row, 1).getValue(); // A列：チャンネル
+    const date = sheet.getRange(row, 2).getValue();    // B列：予約日時
+    const triggered = sheet.getRange(row, 4).getValue(); // D列：トリガー済みかどうか
 
-    const date = new Date(range.getValue());
-    if (date.getTime() > new Date().getTime()) {
-      createTimeTrigger(date, range.getRow());
+    if (channel && date instanceof Date && !triggered && date > now) {
+      // トリガーがまだ設定されていなければ
+      createTimeTrigger(date, row);
+      sheet.getRange(row, 4).setValue("triggered");  // D列にマーク
     }
   }
 }
