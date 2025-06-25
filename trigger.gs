@@ -15,7 +15,7 @@ function runRemoAtScheduledTime() {
   var row = parseInt(props.getProperty("targetRow"), 10);
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("post");
 
-  var channel = sheet.getRange(row, 2).getValue();  // チャンネル（B列）
+  var channel = sheet.getRange(row, 1).getValue();  // チャンネル（B列）
   recordTVProgram(channel)      // Remoで操作
 
   sheet.getRange(row, 3).setValue(true);  // 実行済み（C列）にtrue
